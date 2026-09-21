@@ -1,0 +1,73 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+develop-eggs/
+sdist/
+wheels/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Testing / coverage / type checking
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+coverage.xml
+*.cover
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Application runtime data (local installs)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+data/
+logs/
+*.log
+
+# PyInstaller
+*.manifest
+*.spec.bak
+packaging/windows/dist/
+packaging/windows/build/
+packaging/linux/dist/
+packaging/linux/build/
+packaging/macos/dist/
+packaging/macos/build/
+
+# Environment / secrets (none required, but ignore if present)
+.env
+.env.*
+!.env.example
+
+# OS
+desktop.ini
+
+# Local AI user data accidentally copied into repo
+LocalAI/
+*.local/
