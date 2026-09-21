@@ -1,0 +1,158 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "local-ai"
+version = "1.0.0"
+description = "Privacy-first desktop AI workspace powered by local language models."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.13"
+authors = [
+    { name = "Luca Verduyn" },
+]
+keywords = [
+    "local-ai",
+    "ollama",
+    "pyside6",
+    "rag",
+    "privacy",
+    "desktop",
+    "llm",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "PySide6>=6.7.0",
+    "httpx>=0.27.0",
+    "numpy>=2.0.0",
+    "pypdf>=5.0.0",
+    "python-docx>=1.1.0",
+    "markdown-it-py>=3.0.0",
+    "platformdirs>=4.2.0",
+    "pydantic>=2.8.0",
+    "pydantic-settings>=2.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-qt>=4.4.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.6.0",
+    "mypy>=1.11.0",
+    "types-requests",
+]
+packaging = [
+    "pyinstaller>=6.10.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/LucaVerduyn/local-ai"
+Documentation = "https://github.com/LucaVerduyn/local-ai/tree/main/docs"
+Repository = "https://github.com/LucaVerduyn/local-ai"
+Issues = "https://github.com/LucaVerduyn/local-ai/issues"
+Changelog = "https://github.com/LucaVerduyn/local-ai/blob/main/CHANGELOG.md"
+
+[project.scripts]
+local-ai = "local_ai.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/local_ai"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/docs",
+    "/packaging",
+    "/LICENSE",
+    "/README.md",
+    "/CHANGELOG.md",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+qt_api = "pyside6"
+addopts = "-q --strict-markers"
+markers = [
+    "integration: tests that need external services",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "B",
+    "SIM",
+    "N",
+    "W",
+]
+ignore = [
+    "E501",
+    "N802",  # Qt overrides use CamelCase (e.g. closeEvent)
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+packages = ["local_ai"]
+mypy_path = "src"
+exclude = ["packaging/", "build/", "dist/"]
+
+[[tool.mypy.overrides]]
+module = [
+    "PySide6.*",
+    "docx.*",
+    "pypdf.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    "local_ai.ui.*",
+    "local_ai.app",
+]
+disable_error_code = [
+    "attr-defined",
+    "arg-type",
+    "assignment",
+    "method-assign",
+    "union-attr",
+    "call-overload",
+    "func-returns-value",
+    "unused-ignore",
+]
+
+[tool.coverage.run]
+source = ["local_ai"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
